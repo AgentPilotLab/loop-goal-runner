@@ -11,6 +11,7 @@ $required = @(
   'AGENTS.md',
   'llms.txt',
   'docs/AI_AGENT_GUIDE.md',
+  'docs/GITHUB_RELEASE_NOTES_TEMPLATE.md',
   'docs/SOURCES.md',
   'skills/loop-goal-runner/SKILL.md',
   'skills/loop-goal-runner/references/state-template.md',
@@ -35,7 +36,7 @@ if ($readme -notmatch 'README\.zh-CN\.md') {
   $failed = $true
 }
 
-foreach ($requiredPhrase in @('Distribution Status', 'Codex Setup', 'Claude Code Setup', 'GitHub Release', 'AI Entry Points', 'Support')) {
+foreach ($requiredPhrase in @('Install Channels', 'Codex Setup', 'Claude Code Setup', 'GitHub Releases', 'AI Entry Points', 'Support')) {
   if ($readme -notmatch [regex]::Escape($requiredPhrase)) {
     Write-Error "README.md must include section or phrase: $requiredPhrase"
     $failed = $true

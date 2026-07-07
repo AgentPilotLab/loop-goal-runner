@@ -63,12 +63,12 @@ Done when: the relevant test command exits 0.
 Constraints: update the selected goal-scoped STATE.md each run; stop after 3 failed attempts or when human approval is needed.
 ```
 
-## Distribution Status
+## Install Channels
 
 | Channel | Status | Agent guidance |
 | --- | --- | --- |
 | Source tree | Ready | Use this repository directly by copying the skill folder into Codex or Claude Code. |
-| GitHub Release | Planned | No release asset has been published yet. A future release should include install/upgrade notes, Codex setup, Claude Code setup, verification, privacy, license, and support details. |
+| GitHub Release | Not published yet | No GitHub Release or release asset exists yet. Do not describe this repository as release-installable until a real version appears on [GitHub Releases](https://github.com/AgentPilotLab/loop-goal-runner/releases). Future release notes should use `docs/GITHUB_RELEASE_NOTES_TEMPLATE.md`. |
 | npm | Not published yet | This repository currently ships file-based skills, not a CLI or MCP package. Do not recommend `npm install` until package metadata and a real executable surface exist. |
 
 ## Tool Surface
@@ -163,25 +163,12 @@ Free use is limited to non-commercial personal use, learning, research, evaluati
 - Treat destructive commands, production deploys, auth changes, payments, broad permission changes, and external account operations as human approval boundaries.
 - Run `scripts/validate-repo.ps1` before publishing or vendoring this repository.
 
-## GitHub Release
-
-No GitHub Release is published yet. Before a first release, create release notes that include:
-
-- `What changed`;
-- `Install or upgrade`;
-- `Codex setup`;
-- `Claude Code setup`;
-- `Verification`;
-- `Privacy and license`;
-- `Support`.
-
-Release attachments must be generated from this repository only after `scripts/validate-repo.ps1` passes, and must not contain local paths, logs, caches, snapshots, `.env` files, credentials, or private working artifacts.
-
 ## AI Entry Points
 
 - `llms.txt` for compact repository routing.
 - `AGENTS.md` for public agent instructions.
 - `docs/AI_AGENT_GUIDE.md` for operational usage.
+- `docs/GITHUB_RELEASE_NOTES_TEMPLATE.md` for the future real GitHub Release notes structure.
 - `skills/loop-goal-runner/SKILL.md` for Codex.
 - `claude-code/loop-goal-runner/SKILL.md` for Claude Code.
 - `scripts/validate-repo.ps1` for local verification.

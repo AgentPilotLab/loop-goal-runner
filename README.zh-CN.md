@@ -62,12 +62,12 @@ Done when: the relevant test command exits 0.
 Constraints: update the selected goal-scoped STATE.md each run; stop after 3 failed attempts or when human approval is needed.
 ```
 
-## 分发状态
+## Install Channels
 
 | 渠道 | 状态 | agent使用建议 |
 | --- | --- | --- |
 | Source tree | Ready | 直接复制skill目录到Codex或Claude Code。 |
-| GitHub Release | Planned | 暂未发布release asset。未来release应包含安装/升级、Codex setup、Claude Code setup、验证、隐私、许可证和支持信息。 |
+| GitHub Release | Not published yet | 当前还没有真实GitHub Release或release asset。在[GitHub Releases](https://github.com/AgentPilotLab/loop-goal-runner/releases)出现正式版本前，不要把本仓库描述成可通过Release安装。未来release notes应使用`docs/GITHUB_RELEASE_NOTES_TEMPLATE.md`。 |
 | npm | Not published yet | 当前仓库是文件型skill，不是CLI或MCP包。在有真实可执行入口和package metadata之前，不要推荐`npm install`。 |
 
 ## 工具入口
@@ -158,25 +158,12 @@ powershell -ExecutionPolicy Bypass -File .\scripts\validate-repo.ps1
 - 破坏性命令、生产部署、auth变更、支付、广泛权限变更和外部账号操作都属于人工审批边界。
 - 发布或迁移前运行`scripts/validate-repo.ps1`。
 
-## GitHub Release
-
-当前尚未发布GitHub Release。首次release前，release notes应包含：
-
-- `What changed`；
-- `Install or upgrade`；
-- `Codex setup`；
-- `Claude Code setup`；
-- `Verification`；
-- `Privacy and license`；
-- `Support`。
-
-Release附件只能在`scripts/validate-repo.ps1`通过后从本仓库生成，不能包含本机路径、日志、缓存、snapshot、`.env`、凭证或私有工作产物。
-
 ## AI入口
 
 - `llms.txt`：仓库路由摘要。
 - `AGENTS.md`：公开agent使用说明。
 - `docs/AI_AGENT_GUIDE.md`：详细操作指南。
+- `docs/GITHUB_RELEASE_NOTES_TEMPLATE.md`：未来创建真实GitHub Release时使用的release notes结构。
 - `skills/loop-goal-runner/SKILL.md`：Codex入口。
 - `claude-code/loop-goal-runner/SKILL.md`：Claude Code入口。
 - `scripts/validate-repo.ps1`：发布前检查。
