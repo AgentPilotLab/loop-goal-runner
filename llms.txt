@@ -1,0 +1,24 @@
+# Loop Goal Runner
+
+Loop Goal Runner is a stateful Goal mode skill for Codex, Claude Code, and AI agents. Use it for `/goal`, long-running tasks, recurring agent work, "continue until done", or any workflow that needs durable `STATE.md` memory, objective verification gates, and explicit stop rules.
+
+Primary entry points:
+
+- `README.md`: English default README with setup, advantages, industry context, similar project comparison, license, and support.
+- `README.zh-CN.md`: Chinese README.
+- `AGENTS.md`: Public agent instructions for maintaining this repository.
+- `skills/loop-goal-runner/SKILL.md`: Codex skill.
+- `claude-code/loop-goal-runner/SKILL.md`: Claude Code skill.
+- `skills/loop-goal-runner/references/state-template.md`: Goal-scoped `STATE.md` template.
+- `skills/loop-goal-runner/references/agents-snippet.md`: Optional trigger reliability snippet.
+- `docs/AI_AGENT_GUIDE.md`: Detailed operational guide for AI agents.
+- `scripts/validate-repo.ps1`: Repository validation and privacy scan.
+
+Key contract:
+
+1. Shape a measurable goal.
+2. Read or create a goal-scoped `STATE.md`.
+3. Run one smallest useful iteration.
+4. Verify with a fresh objective gate.
+5. Update state with actions, verification, blockers, lessons, and next action.
+6. Stop on success, repeated blocker, budget limit, permissions, credentials, risky production work, or human judgment.

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Loop Goal Runner"
+  short_description: "Automatic stateful loops for Codex and Claude Code Goal mode."
+  default_prompt: "Use $loop-goal-runner whenever Codex or Claude Code Goal mode is active, then run the goal as a stateful, verified loop."
+
+policy:
+  allow_implicit_invocation: true
