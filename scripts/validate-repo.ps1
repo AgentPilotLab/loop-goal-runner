@@ -36,6 +36,13 @@ if ($readme -notmatch 'README\.zh-CN\.md') {
   $failed = $true
 }
 
+foreach ($requiredPhrase in @('Distribution Status', 'Codex Setup', 'Claude Code Setup', 'GitHub Release', 'AI Entry Points', 'Support')) {
+  if ($readme -notmatch [regex]::Escape($requiredPhrase)) {
+    Write-Error "README.md must include section or phrase: $requiredPhrase"
+    $failed = $true
+  }
+}
+
 $zhReadme = Get-Content -LiteralPath (Join-Path $Root 'README.zh-CN.md') -Encoding UTF8 -Raw
 if ($zhReadme -notmatch 'README\.md') {
   Write-Error 'README.zh-CN.md must link back to README.md near the top.'

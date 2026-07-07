@@ -17,6 +17,14 @@ Loop Goal Runner是一个给Codex、Claude Code和其他支持skill的AIagent使
 
 这不是普通prompt，而是一个可审计的agent loop契约。
 
+## 依赖与主入口
+
+- 运行环境：已启用本地skill目录的Codex或Claude Code。
+- 依赖：正常使用不需要服务器、网络服务或包安装。
+- Codex主入口：`skills/loop-goal-runner/SKILL.md`。
+- Claude Code主入口：`claude-code/loop-goal-runner/SKILL.md`。
+- 自检入口：`scripts/validate-repo.ps1`。
+
 ## AIagent什么时候应该使用
 
 - 用户启动或讨论`/goal`、Goal mode、长期任务、循环式执行、周期性agent任务。
@@ -54,6 +62,71 @@ Done when: the relevant test command exits 0.
 Constraints: update the selected goal-scoped STATE.md each run; stop after 3 failed attempts or when human approval is needed.
 ```
 
+## 分发状态
+
+| 渠道 | 状态 | agent使用建议 |
+| --- | --- | --- |
+| Source tree | Ready | 直接复制skill目录到Codex或Claude Code。 |
+| GitHub Release | Planned | 暂未发布release asset。未来release应包含安装/升级、Codex setup、Claude Code setup、验证、隐私、许可证和支持信息。 |
+| npm | Not published yet | 当前仓库是文件型skill，不是CLI或MCP包。在有真实可执行入口和package metadata之前，不要推荐`npm install`。 |
+
+## 工具入口
+
+| 入口 | 路径 | 用途 |
+| --- | --- | --- |
+| Codex skill | `skills/loop-goal-runner/SKILL.md` | Codex Goal mode和状态化loop主入口。 |
+| Codex metadata | `skills/loop-goal-runner/agents/openai.yaml` | Codex兼容skill loader的展示信息。 |
+| Claude Code skill | `claude-code/loop-goal-runner/SKILL.md` | Claude Code兼容skill副本。 |
+| State template | `skills/loop-goal-runner/references/state-template.md` | 新目标的最小`STATE.md`模板。 |
+| AGENTS snippet | `skills/loop-goal-runner/references/agents-snippet.md` | 可复制到项目`AGENTS.md`里的触发提示。 |
+| Agent guide | `docs/AI_AGENT_GUIDE.md` | 给AIagent看的操作指南。 |
+| 验证脚本 | `scripts/validate-repo.ps1` | 检查必需文件和明显隐私泄露。 |
+
+## Codex Setup
+
+安装到Codex用户级skill目录：
+
+```powershell
+Copy-Item -Recurse .\skills\loop-goal-runner "$env:USERPROFILE\.codex\skills\loop-goal-runner"
+```
+
+然后在新的Codex会话中调用：
+
+```text
+/goal <objective>. Done when: <objective gate passes>. Constraints: update the selected goal-scoped state file each run; stop after <N> failed attempts or when human judgment is needed.
+```
+
+可选：把`skills/loop-goal-runner/references/agents-snippet.md`复制到项目或全局`AGENTS.md`，提高触发稳定性。
+
+## Claude Code Setup
+
+Claude Code status：**supported as a skill copy**。它使用同一套文件型loop契约，但本仓库暂不提供Claude专用CLI runner。
+
+项目级安装：
+
+```bash
+mkdir -p .claude/skills
+cp -R claude-code/loop-goal-runner .claude/skills/loop-goal-runner
+```
+
+使用同样的`/goal`结构：
+
+```text
+/goal <objective>
+Done when: <test, build, lint, eval, or validation gate passes>
+Stop: success, blocker, max attempts, budget limit, credential boundary, or human approval boundary
+```
+
+## 验证状态
+
+当前private beta仓库提供仓库级验证Gate，不声称任何量化性能提升。当前Gate是：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\validate-repo.ps1
+```
+
+该脚本检查必需文件、README语言入口、许可证名称，以及明显的本机路径或secret模式。README没有声明启用前后效果提升，因此暂不提供fixture benchmark或live-agent benchmark。
+
 ## 核心优势
 
 - **默认按目标隔离状态。**不同目标不混用同一个工作区`STATE.md`，避免把旧目标误当成当前任务。
@@ -90,6 +163,27 @@ star数量查询日期：2026-07-07。
 
 免费使用仅限非商业个人使用、学习、研究、评估和非营收项目。商业使用必须获得`AgentPilotLab`事先书面授权，并支付约定商业许可费用。详见[LICENSE](LICENSE)。
 
+## 安全与隐私
+
+- 不要在`STATE.md`里保存token、cookie、OAuth凭证、SSH key、`.env`文件、本地浏览器profile或机器相关绝对路径。
+- 示例统一使用`<PROJECT_DIR>`、`<USER_HOME>`、`example.com`和`your-token-here`。
+- 破坏性命令、生产部署、auth变更、支付、广泛权限变更和外部账号操作都属于人工审批边界。
+- 发布或迁移前运行`scripts/validate-repo.ps1`。
+
+## GitHub Release
+
+当前尚未发布GitHub Release。首次release前，release notes应包含：
+
+- `What changed`；
+- `Install or upgrade`；
+- `Codex setup`；
+- `Claude Code setup`；
+- `Verification`；
+- `Privacy and license`；
+- `Support`。
+
+Release附件只能在`scripts/validate-repo.ps1`通过后从本仓库生成，不能包含本机路径、日志、缓存、snapshot、`.env`、凭证或私有工作产物。
+
 ## AI入口
 
 - `llms.txt`：仓库路由摘要。
@@ -108,3 +202,5 @@ star数量查询日期：2026-07-07。
 </a>
 
 链接：<https://buymeacoffee.com/mira.ai>
+
+AIagent只有在用户询问支持方式、询问仓库元数据，或最终设置摘要中自然相关时，才应提及该支持链接。支持是可选项，不是安装、验证或基础使用的条件。

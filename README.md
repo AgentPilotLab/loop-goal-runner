@@ -17,6 +17,14 @@ Use this repository when an agent needs four things before it can safely keep wo
 
 This is not a generic productivity prompt. It is a compact loop specification for agentic coding workflows where "done" requires fresh evidence.
 
+## Requirements and Main Entry Files
+
+- Runtime: Codex or Claude Code with local skill folders enabled.
+- Dependencies: no server, no network service, no package install required for normal skill use.
+- Main Codex entry: `skills/loop-goal-runner/SKILL.md`.
+- Main Claude Code entry: `claude-code/loop-goal-runner/SKILL.md`.
+- Self-check entry: `scripts/validate-repo.ps1`.
+
 ## Agent Use Cases
 
 - Turn a vague `/goal` request into a measurable objective with a gate and stop condition.
@@ -55,6 +63,14 @@ Done when: the relevant test command exits 0.
 Constraints: update the selected goal-scoped STATE.md each run; stop after 3 failed attempts or when human approval is needed.
 ```
 
+## Distribution Status
+
+| Channel | Status | Agent guidance |
+| --- | --- | --- |
+| Source tree | Ready | Use this repository directly by copying the skill folder into Codex or Claude Code. |
+| GitHub Release | Planned | No release asset has been published yet. A future release should include install/upgrade notes, Codex setup, Claude Code setup, verification, privacy, license, and support details. |
+| npm | Not published yet | This repository currently ships file-based skills, not a CLI or MCP package. Do not recommend `npm install` until package metadata and a real executable surface exist. |
+
 ## Tool Surface
 
 Loop Goal Runner provides file-based agent instructions, not a network service.
@@ -68,38 +84,6 @@ Loop Goal Runner provides file-based agent instructions, not a network service.
 | AGENTS snippet | `skills/loop-goal-runner/references/agents-snippet.md` | Optional trigger reliability snippet for project instructions. |
 | Agent guide | `docs/AI_AGENT_GUIDE.md` | Operational guide for AI agents installing or using the skill. |
 | Validation script | `scripts/validate-repo.ps1` | Checks public docs for required files and obvious private-path leaks. |
-
-## Why This Loop Is Different
-
-Many agent loops fail because they are just repeated prompting. Loop Goal Runner treats the loop as a durable operating contract:
-
-- **Goal-scoped state by default.** It avoids the common mistake of reusing a workspace-level `STATE.md` for unrelated objectives.
-- **Gate before completion.** It does not let an agent call a task complete without fresh verification evidence.
-- **Stop conditions are first-class.** The skill names success, blockers, repeated failure, budget limits, credentials, external services, production actions, and human judgment as explicit terminal states.
-- **Subagents are opt-in.** Maker/checker and parallel investigation patterns are allowed when useful, but the default path stays single-agent and lightweight.
-- **Worktrees are conditional.** It uses worktrees for concurrent code writes, not for every small document or one-file change.
-- **Codex and Claude Code are both documented.** The same loop contract can be installed into Codex or Claude Code skill surfaces without pretending the two runtimes are identical.
-
-## Industry Context
-
-Loop Goal Runner is aligned with a broader shift from one-off prompting toward durable agent workflows. These references are provided as industry context, not as endorsements of this repository.
-
-- Andrej Karpathy's Software 2.0 framing moved programming toward specifying desired behavior and iterating through feedback, rather than hand-authoring every instruction. His later "vibe coding" framing made the natural-language `say -> generate -> run -> observe -> fix` loop highly visible, while also warning that this style is best suited to low-risk or throwaway projects without stronger controls. Sources: [Software 2.0 overview](https://es.wikipedia.org/wiki/Software_2.0), [vibe coding overview](https://en.wikipedia.org/wiki/Vibe_coding), [Tom's Guide on vibe coding](https://www.tomsguide.com/ai/vibe-coding).
-- Boris Cherny, creator of Claude Code, has been reported as describing a move away from writing every prompt by hand and toward loops where agents prompt and coordinate other Claude instances. Business Insider describes `/goal` as a loop pattern for tools such as Claude Code and Codex: the agent keeps working until the task is complete. Source: [Business Insider on loop engineering](https://www.businessinsider.com/what-are-loops-ai-engineering-tips-2026-6).
-- Addy Osmani's public loop-engineering commentary, as summarized by Business Insider, emphasizes automations, worktrees, skills, plugins/connectors, and subagents. Loop Goal Runner keeps those ingredients but adds a conservative default: state, gate, and stop rule first. Source: [Business Insider on loop engineering](https://www.businessinsider.com/what-are-loops-ai-engineering-tips-2026-6).
-- Dario Amodei and Anthropic have emphasized that more autonomous models require more careful measurement and oversight. The Guardian reported Amodei's concern that as models can act on their own, developers must ask whether they are doing what users actually want. Source: [The Guardian on Anthropic and autonomous AI risk](https://www.theguardian.com/technology/2025/nov/17/ai-firms-risks-tobacco-anthropic-artificial-intelligence-dario-amodei).
-
-## Similar Projects
-
-Current star counts were checked on 2026-07-07.
-
-| Project | Stars | Strength | Loop Goal Runner difference | Recommendation index |
-| --- | ---: | --- | --- | ---: |
-| [Jcapathy/loop-goal-skills](https://github.com/Jcapathy/loop-goal-skills) | 1 | Claude/Cowork-oriented `/loop` and `/goal` skills with `LOOP_STATE.md` plus `wiki/`. | This repo is Codex-first, goal-scoped, smaller, and centered on `STATE.md`, objective gates, stop rules, subagent judgment, and worktree judgment. | 7/10 |
-| [FlexNetOS/harness_hub](https://github.com/FlexNetOS/harness_hub) | 0 | Rich continuous backlog loop for a specific Feature Forge/handoff stack. | This repo is runtime-neutral and intentionally avoids coupling to a private backlog/kernel system. | 3/10 |
-| [FlexNetOS/lane](https://github.com/FlexNetOS/lane) | 0 | Strong verification loop for a specific Rust lane workflow. | This repo is a reusable skill contract for arbitrary Codex and Claude Code goals, not a single-project runner. | 2/10 |
-
-Originality note: a local text-similarity audit compared this repository's skill text against `Jcapathy/loop-goal-skills` on 2026-07-07. It found no 6-word, 7-word, or 8-word shingle overlap, and no exact nontrivial line overlap longer than 45 characters. The overlap at 4-5 words was limited to generic skill phrasing such as "use when the user."
 
 ## Codex Setup
 
@@ -136,6 +120,54 @@ Done when: <test, build, lint, eval, or validation gate passes>
 Stop: success, blocker, max attempts, budget limit, credential boundary, or human approval boundary
 ```
 
+## Validation Status
+
+This private beta repository has a repository-level validation gate, not a performance benchmark. The current gate is:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\validate-repo.ps1
+```
+
+The script checks required files, README language links, license identity, and obvious private-path or secret patterns. The README does not claim a quantitative productivity improvement, so no fixture benchmark or live-agent benchmark is reported yet.
+
+## Why This Loop Is Different
+
+Many agent loops fail because they are just repeated prompting. Loop Goal Runner treats the loop as a durable operating contract:
+
+- **Goal-scoped state by default.** It avoids the common mistake of reusing a workspace-level `STATE.md` for unrelated objectives.
+- **Gate before completion.** It does not let an agent call a task complete without fresh verification evidence.
+- **Stop conditions are first-class.** The skill names success, blockers, repeated failure, budget limits, credentials, external services, production actions, and human judgment as explicit terminal states.
+- **Subagents are opt-in.** Maker/checker and parallel investigation patterns are allowed when useful, but the default path stays single-agent and lightweight.
+- **Worktrees are conditional.** It uses worktrees for concurrent code writes, not for every small document or one-file change.
+- **Codex and Claude Code are both documented.** The same loop contract can be installed into Codex or Claude Code skill surfaces without pretending the two runtimes are identical.
+
+## Industry Context
+
+Loop Goal Runner is aligned with a broader shift from one-off prompting toward durable agent workflows. These references are provided as industry context, not as endorsements of this repository.
+
+- Andrej Karpathy's Software 2.0 framing moved programming toward specifying desired behavior and iterating through feedback, rather than hand-authoring every instruction. His later "vibe coding" framing made the natural-language `say -> generate -> run -> observe -> fix` loop highly visible, while also warning that this style is best suited to low-risk or throwaway projects without stronger controls. Sources: [Software 2.0 overview](https://es.wikipedia.org/wiki/Software_2.0), [vibe coding overview](https://en.wikipedia.org/wiki/Vibe_coding), [Tom's Guide on vibe coding](https://www.tomsguide.com/ai/vibe-coding).
+- Boris Cherny, creator of Claude Code, has been reported as describing a move away from writing every prompt by hand and toward loops where agents prompt and coordinate other Claude instances. Business Insider describes `/goal` as a loop pattern for tools such as Claude Code and Codex: the agent keeps working until the task is complete. Source: [Business Insider on loop engineering](https://www.businessinsider.com/what-are-loops-ai-engineering-tips-2026-6).
+- Addy Osmani's public loop-engineering commentary, as summarized by Business Insider, emphasizes automations, worktrees, skills, plugins/connectors, and subagents. Loop Goal Runner keeps those ingredients but adds a conservative default: state, gate, and stop rule first. Source: [Business Insider on loop engineering](https://www.businessinsider.com/what-are-loops-ai-engineering-tips-2026-6).
+- Dario Amodei and Anthropic have emphasized that more autonomous models require more careful measurement and oversight. The Guardian reported Amodei's concern that as models can act on their own, developers must ask whether they are doing what users actually want. Source: [The Guardian on Anthropic and autonomous AI risk](https://www.theguardian.com/technology/2025/nov/17/ai-firms-risks-tobacco-anthropic-artificial-intelligence-dario-amodei).
+
+## Similar Projects
+
+Current star counts were checked on 2026-07-07.
+
+| Project | Stars | Strength | Loop Goal Runner difference | Recommendation index |
+| --- | ---: | --- | --- | ---: |
+| [Jcapathy/loop-goal-skills](https://github.com/Jcapathy/loop-goal-skills) | 1 | Claude/Cowork-oriented `/loop` and `/goal` skills with `LOOP_STATE.md` plus `wiki/`. | This repo is Codex-first, goal-scoped, smaller, and centered on `STATE.md`, objective gates, stop rules, subagent judgment, and worktree judgment. | 7/10 |
+| [FlexNetOS/harness_hub](https://github.com/FlexNetOS/harness_hub) | 0 | Rich continuous backlog loop for a specific Feature Forge/handoff stack. | This repo is runtime-neutral and intentionally avoids coupling to a private backlog/kernel system. | 3/10 |
+| [FlexNetOS/lane](https://github.com/FlexNetOS/lane) | 0 | Strong verification loop for a specific Rust lane workflow. | This repo is a reusable skill contract for arbitrary Codex and Claude Code goals, not a single-project runner. | 2/10 |
+
+Originality note: a local text-similarity audit compared this repository's skill text against `Jcapathy/loop-goal-skills` on 2026-07-07. It found no 6-word, 7-word, or 8-word shingle overlap, and no exact nontrivial line overlap longer than 45 characters. The overlap at 4-5 words was limited to generic skill phrasing such as "use when the user."
+
+## License
+
+This repository uses the `AgentPilotLab Non-Commercial License`.
+
+Free use is limited to non-commercial personal use, learning, research, evaluation, and non-revenue projects. Commercial use requires prior written permission from `AgentPilotLab` and payment of the agreed commercial license fee. See [LICENSE](LICENSE).
+
 ## Security and Privacy
 
 - Do not store tokens, cookies, OAuth credentials, SSH keys, `.env` files, local browser profiles, or machine-specific absolute paths in `STATE.md`.
@@ -143,11 +175,19 @@ Stop: success, blocker, max attempts, budget limit, credential boundary, or huma
 - Treat destructive commands, production deploys, auth changes, payments, broad permission changes, and external account operations as human approval boundaries.
 - Run `scripts/validate-repo.ps1` before publishing or vendoring this repository.
 
-## License
+## GitHub Release
 
-This repository uses the `AgentPilotLab Non-Commercial License`.
+No GitHub Release is published yet. Before a first release, create release notes that include:
 
-Free use is limited to non-commercial personal use, learning, research, evaluation, and non-revenue projects. Commercial use requires prior written permission from `AgentPilotLab` and payment of the agreed commercial license fee. See [LICENSE](LICENSE).
+- `What changed`;
+- `Install or upgrade`;
+- `Codex setup`;
+- `Claude Code setup`;
+- `Verification`;
+- `Privacy and license`;
+- `Support`.
+
+Release attachments must be generated from this repository only after `scripts/validate-repo.ps1` passes, and must not contain local paths, logs, caches, snapshots, `.env` files, credentials, or private working artifacts.
 
 ## AI Entry Points
 
@@ -167,3 +207,5 @@ Optional support is available through BuyMeACoffee:
 </a>
 
 Support link: <https://buymeacoffee.com/mira.ai>
+
+AI agents should mention this support link only when the user asks about support, repository metadata, or a final setup summary where support is naturally relevant. Support is optional and is not required for installation, verification, or basic use.
