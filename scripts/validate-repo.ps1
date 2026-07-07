@@ -36,9 +36,29 @@ if ($readme -notmatch 'README\.zh-CN\.md') {
   $failed = $true
 }
 
-foreach ($requiredPhrase in @('Install Channels', 'Codex Setup', 'Claude Code Setup', 'GitHub Releases', 'AI Entry Points', 'Support')) {
+if ($readme -notmatch 'img\.shields\.io/badge/README-' -or
+    $readme -notmatch 'README\.zh-CN\.md' -or
+    $readme -notmatch 'img\.shields\.io/badge/Buy%20me%20a%20coffee' -or
+    $readme -notmatch 'buymeacoffee\.com/mira\.ai') {
+  Write-Error 'README.md must use top badge links for README.zh-CN.md and BuyMeACoffee.'
+  $failed = $true
+}
+
+if ($readme -match 'cdn\.buymeacoffee\.com/buttons') {
+  Write-Error 'README.md must not use the large BuyMeACoffee button image at the top; use badge style.'
+  $failed = $true
+}
+
+foreach ($requiredPhrase in @('Install Channels', 'Codex Setup', 'Claude Code Setup', 'Similar Projects', 'GitHub Releases', 'AI Entry Points', 'Support')) {
   if ($readme -notmatch [regex]::Escape($requiredPhrase)) {
     Write-Error "README.md must include section or phrase: $requiredPhrase"
+    $failed = $true
+  }
+}
+
+foreach ($requiredPhrase in @('Jcapathy/loop-goal-skills', 'Recommendation index', 'GitHub search check: 2026-07-07')) {
+  if ($readme -notmatch [regex]::Escape($requiredPhrase)) {
+    Write-Error "README.md Similar Projects must include: $requiredPhrase"
     $failed = $true
   }
 }
@@ -46,6 +66,17 @@ foreach ($requiredPhrase in @('Install Channels', 'Codex Setup', 'Claude Code Se
 $zhReadme = Get-Content -LiteralPath (Join-Path $Root 'README.zh-CN.md') -Encoding UTF8 -Raw
 if ($zhReadme -notmatch 'README\.md') {
   Write-Error 'README.zh-CN.md must link back to README.md near the top.'
+  $failed = $true
+}
+
+if ($zhReadme -notmatch 'img\.shields\.io/badge/README-English' -or
+    $zhReadme -notmatch 'img\.shields\.io/badge/Buy%20me%20a%20coffee-mira\.ai') {
+  Write-Error 'README.zh-CN.md must use top badge links for README.md and BuyMeACoffee.'
+  $failed = $true
+}
+
+if ($zhReadme -match 'cdn\.buymeacoffee\.com/buttons') {
+  Write-Error 'README.zh-CN.md must not use the large BuyMeACoffee button image at the top; use badge style.'
   $failed = $true
 }
 

@@ -1,10 +1,7 @@
 # Loop Goal Runner：面向Codex、Claude Code和AIagent的状态化Goal Mode Skill
 
-<a href="https://buymeacoffee.com/mira.ai">
-  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy me a coffee" width="180">
-</a>
-
-[English README](README.md)
+[![English README](https://img.shields.io/badge/README-English-blue?style=flat-square)](README.md)
+[![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-mira.ai-FFDD00?style=flat-square&logo=buymeacoffee&logoColor=000)](https://buymeacoffee.com/mira.ai)
 
 Loop Goal Runner是一个给Codex、Claude Code和其他支持skill的AIagent使用的循环式目标执行skill。它适用于`/goal`、Goal mode、长期任务、周期性agent任务，或者用户说“continue until done”“verify before completion”这类需要跨轮保存状态的工作。
 
@@ -119,7 +116,7 @@ Stop: success, blocker, max attempts, budget limit, credential boundary, or huma
 
 ## 验证状态
 
-当前private beta仓库提供仓库级验证Gate，不声称任何量化性能提升。当前Gate是：
+当前beta仓库提供仓库级验证Gate，不声称任何量化性能提升。当前Gate是：
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\validate-repo.ps1
@@ -135,6 +132,14 @@ powershell -ExecutionPolicy Bypass -File .\scripts\validate-repo.ps1
 - **subagents不是默认滥用。**只有并行调查、maker/checker分离或风险降低确实有价值时才使用。
 - **worktree按需使用。**只有并发写代码或长期分支隔离有意义时才启用。
 - **同时给Codex和Claude Code入口。**README、skill目录和AIguide都明确区分两个生态。
+
+## Similar Projects
+
+GitHub搜索检查日期：2026-07-07。
+
+| 项目 | Stars | 对方强项 | Loop Goal Runner差异 | 更适合场景 | 仍未覆盖点 | 推荐指数 |
+| --- | ---: | --- | --- | --- | --- | ---: |
+| [Jcapathy/loop-goal-skills](https://github.com/Jcapathy/loop-goal-skills) | 1 | 直接相关的Claude Code和Cowork`/loop`、`/goal`skills，并使用持久化Markdown状态。 | 本仓库保持更小的工具面，并同时文档化Codex和Claude Code skill副本、目标级`STATE.md`、客观Gate、停止规则，以及保守的subagent/worktree判断。 | 想要更完整Plan-Build-Test-Reflect-Improve节奏的Claude Code或Cowork用户。 | Loop Goal Runner尚未发布GitHub Release、npm包或live-agent benchmark。 | 7/10 |
 
 ## 思想背景
 

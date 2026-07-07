@@ -1,10 +1,7 @@
 # Loop Goal Runner: Stateful Goal Mode Skill for Codex, Claude Code, and AI Agents
 
-<a href="https://buymeacoffee.com/mira.ai">
-  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy me a coffee" width="180">
-</a>
-
-[中文README](README.zh-CN.md)
+[![中文README](https://img.shields.io/badge/README-中文-blue?style=flat-square)](README.zh-CN.md)
+[![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-mira.ai-FFDD00?style=flat-square&logo=buymeacoffee&logoColor=000)](https://buymeacoffee.com/mira.ai)
 
 Loop Goal Runner is an AI agent skill for Codex, Claude Code, and other skill-capable coding agents that need to run `/goal`, Goal mode, long-running tasks, recurring agent work, or "continue until done" requests as a bounded, stateful, verifiable loop.
 
@@ -122,7 +119,7 @@ Stop: success, blocker, max attempts, budget limit, credential boundary, or huma
 
 ## Validation Status
 
-This private beta repository has a repository-level validation gate, not a performance benchmark. The current gate is:
+This beta repository has a repository-level validation gate, not a performance benchmark. The current gate is:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\validate-repo.ps1
@@ -140,6 +137,14 @@ Many agent loops fail because they are just repeated prompting. Loop Goal Runner
 - **Subagents are opt-in.** Maker/checker and parallel investigation patterns are allowed when useful, but the default path stays single-agent and lightweight.
 - **Worktrees are conditional.** It uses worktrees for concurrent code writes, not for every small document or one-file change.
 - **Codex and Claude Code are both documented.** The same loop contract can be installed into Codex or Claude Code skill surfaces without pretending the two runtimes are identical.
+
+## Similar Projects
+
+GitHub search check: 2026-07-07.
+
+| Project | Stars | Strength | Loop Goal Runner difference | Best fit | Remaining gap | Recommendation index |
+| --- | ---: | --- | --- | --- | --- | ---: |
+| [Jcapathy/loop-goal-skills](https://github.com/Jcapathy/loop-goal-skills) | 1 | Directly related `/loop` and `/goal` skills for Claude Code and Cowork, with persistent markdown state. | This repository keeps the surface smaller and documents both Codex and Claude Code skill copies, goal-scoped `STATE.md`, objective gates, stop rules, and conservative subagent/worktree judgment. | Claude Code or Cowork users who want a fuller Plan-Build-Test-Reflect-Improve cadence. | Loop Goal Runner has not published a GitHub Release, npm package, or live-agent benchmark yet. | 7/10 |
 
 ## Industry Context
 
