@@ -145,18 +145,6 @@ powershell -ExecutionPolicy Bypass -File .\scripts\validate-repo.ps1
 - Addy Osmani关于loop engineering的公开讨论强调automation、worktrees、skills、plugins/connectors和subagents。Loop Goal Runner保留这些要素，但把`STATE.md`、Gate和Stop rule放在最前面。来源：[Business Insider](https://www.businessinsider.com/what-are-loops-ai-engineering-tips-2026-6)。
 - Dario Amodei和Anthropic关于自治AI风险的公开讨论强调，模型越能自主行动，越需要测量和监督它是否真的在做用户想要的事。来源：[The Guardian](https://www.theguardian.com/technology/2025/nov/17/ai-firms-risks-tobacco-anthropic-artificial-intelligence-dario-amodei)。
 
-## 与相近项目对比
-
-star数量查询日期：2026-07-07。
-
-| 项目 | star | 优势 | 本仓库差异 | 推荐指数 |
-| --- | ---: | --- | --- | ---: |
-| [Jcapathy/loop-goal-skills](https://github.com/Jcapathy/loop-goal-skills) | 1 | 面向Claude/Cowork的`/loop`和`/goal`，带`LOOP_STATE.md`和`wiki/`。 | 本仓库更Codex-first、更轻量，聚焦goal-scoped`STATE.md`、objective gate、stop rule、subagent判断和worktree判断。 | 7/10 |
-| [FlexNetOS/harness_hub](https://github.com/FlexNetOS/harness_hub) | 0 | 面向特定Feature Forge/handoff栈的连续backlog loop。 | 本仓库不绑定私有backlog/kernel体系，适合作为通用skill契约。 | 3/10 |
-| [FlexNetOS/lane](https://github.com/FlexNetOS/lane) | 0 | 面向特定Rust lane工作流的强验证loop。 | 本仓库面向任意Codex/Claude Code目标，不是单项目runner。 | 2/10 |
-
-原创性备注：2026-07-07对本仓库skill文本和`Jcapathy/loop-goal-skills`做过本地相似度初筛，未发现6词、7词、8词连续shingle重合，也未发现超过45字符的非平凡完全相同行。4到5词层面的重合仅限`use when the user`这类通用skill描述短语。
-
 ## 许可证
 
 本仓库使用`AgentPilotLab Non-Commercial License`。

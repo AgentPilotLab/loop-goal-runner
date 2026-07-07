@@ -150,18 +150,6 @@ Loop Goal Runner is aligned with a broader shift from one-off prompting toward d
 - Addy Osmani's public loop-engineering commentary, as summarized by Business Insider, emphasizes automations, worktrees, skills, plugins/connectors, and subagents. Loop Goal Runner keeps those ingredients but adds a conservative default: state, gate, and stop rule first. Source: [Business Insider on loop engineering](https://www.businessinsider.com/what-are-loops-ai-engineering-tips-2026-6).
 - Dario Amodei and Anthropic have emphasized that more autonomous models require more careful measurement and oversight. The Guardian reported Amodei's concern that as models can act on their own, developers must ask whether they are doing what users actually want. Source: [The Guardian on Anthropic and autonomous AI risk](https://www.theguardian.com/technology/2025/nov/17/ai-firms-risks-tobacco-anthropic-artificial-intelligence-dario-amodei).
 
-## Similar Projects
-
-Current star counts were checked on 2026-07-07.
-
-| Project | Stars | Strength | Loop Goal Runner difference | Recommendation index |
-| --- | ---: | --- | --- | ---: |
-| [Jcapathy/loop-goal-skills](https://github.com/Jcapathy/loop-goal-skills) | 1 | Claude/Cowork-oriented `/loop` and `/goal` skills with `LOOP_STATE.md` plus `wiki/`. | This repo is Codex-first, goal-scoped, smaller, and centered on `STATE.md`, objective gates, stop rules, subagent judgment, and worktree judgment. | 7/10 |
-| [FlexNetOS/harness_hub](https://github.com/FlexNetOS/harness_hub) | 0 | Rich continuous backlog loop for a specific Feature Forge/handoff stack. | This repo is runtime-neutral and intentionally avoids coupling to a private backlog/kernel system. | 3/10 |
-| [FlexNetOS/lane](https://github.com/FlexNetOS/lane) | 0 | Strong verification loop for a specific Rust lane workflow. | This repo is a reusable skill contract for arbitrary Codex and Claude Code goals, not a single-project runner. | 2/10 |
-
-Originality note: a local text-similarity audit compared this repository's skill text against `Jcapathy/loop-goal-skills` on 2026-07-07. It found no 6-word, 7-word, or 8-word shingle overlap, and no exact nontrivial line overlap longer than 45 characters. The overlap at 4-5 words was limited to generic skill phrasing such as "use when the user."
-
 ## License
 
 This repository uses the `AgentPilotLab Non-Commercial License`.

@@ -11,7 +11,6 @@ $required = @(
   'AGENTS.md',
   'llms.txt',
   'docs/AI_AGENT_GUIDE.md',
-  'docs/COMPARISON.md',
   'docs/SOURCES.md',
   'skills/loop-goal-runner/SKILL.md',
   'skills/loop-goal-runner/references/state-template.md',
